@@ -6,3 +6,5 @@ jupyter====1.0.0
 ipykernel==6.25.2
 pandas-gbq==0.19.2
 isodate==0.6.1
+transformers==4.34.0
+
