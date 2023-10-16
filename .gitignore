@@ -1,3 +1,7 @@
+# Added folders specifically for this project
+model_cache
+yt-env
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
