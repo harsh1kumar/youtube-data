@@ -1,0 +1,4 @@
+# List of folders to be ignored by docker build
+model_cache
+notebooks
+yt-env
