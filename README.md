@@ -1,33 +1,66 @@
 # youtube-data
 End-to-end data science pipeline which uses Youtube data
 
+## Tools used as part of this project:
+1. YouTube Data API
+2. Python
+3. SQL
+4. Docker
+5. Google Cloud:
+    - Google BigQuery
+    - Google Cloud Storage
+    - Service accounts
+    - Artifact Repository (Container Registry)
+6. Hugging Face Transformers
+7. Makefiles
+8. Python Virtual Environments
+9. Jupyter Notebooks
+10. Google Looker Studios
+
+
 ## Setup
 
-Create python virtual environment
+1.) Setup environment for running the code. It would create a python enviroment with the name `yt-env`
 ```
-python -m venv yt-env
+make env
 ```
 
-Activate virtual environment
+2.) After the environment is created, activate it by following make command
 ```
 source yt-env/bin/activate
 ```
 
-Install dependencies
-```
-pip install -r requirements.txt
-```
-
-If you want to use jupyter notebook:
-```
-python -m ipykernel install --user --name=yt-venv-jupyter
-```
-
-Set environment variable for Youtube API key
+3.) Set environment variable for Youtube API key
 ```
 export YOUTUBE_API_KEY=<your-api-key>
 ```
 
+4.) If you want to use service account, you need to put the value of secret key in an environment variable. Below, we are reading the key from `../service-account.json`.
+```
+export SERVICE_ACCOUNT_SECRET_KEY=$(cat ../service-account.json)
+```
+
+NOTE: You would need to install PyTorch, which I did using the following command since I am running on CPU.
+If you want to have a different config for PyTorch, please see [this](https://pytorch.org/get-started/locally/)
+
+
+## Setup for Jupter Notebook
+If you want to use jupyter notebook:
+```
+make env-notebook
+
+python -m ipykernel install --user --name=yt-venv-jupyter
+```
+
+Apart from the above, you will need to install `docker` to build and push docker images.
+
+## Build and Run
+
 ## Resources
 
-- [Looker Dashbboard](https://lookerstudio.google.com/u/0/reporting/c51cf45f-b415-48a9-8f48-0f95be95a616/page/tEnnC)
+- [Looker Dashboard](https://lookerstudio.google.com/u/0/reporting/c51cf45f-b415-48a9-8f48-0f95be95a616/page/tEnnC)
+
+
+## Rough work
+
+
