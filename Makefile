@@ -1,7 +1,17 @@
-.PHONEY: env env-notebook docker-build
+.PHONEY: env env-notebook docker-build docker-push docker-run
 
 SHELL:=bash
 
+## Configs
+GCP_PROJECT=wide-hexagon-397214
+GCP_REGION=asia-south1
+GCP_ARTIFACT_REPO=youtube-data-repo
+IMAGE_NAME=youtube-data-project
+IMAGE_VERSION=latest
+
+IMAGE_GCP_NAME=${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT}/${GCP_ARTIFACT_REPO}/${IMAGE_NAME}:${IMAGE_VERSION}
+
+## Environment
 env:
 	@if [ -d "yt-env" ]; then \
 		echo "yt-env directory already exists"; \
@@ -16,11 +26,18 @@ env:
 env-notebook: env
 	python -m ipykernel install --user --name=yt-venv-jupyter
 
+
+## Docker
 docker-build:
 	docker build . \
-	-t youtube-data-project:latest \
+	-t ${IMAGE_NAME}:${IMAGE_VERSION} \
+	-t ${IMAGE_GCP_NAME} \
 	--build-arg YOUTUBE_API_KEY \
 	--build-arg SERVICE_ACCOUNT_SECRET_KEY
 
+docker-push:
+	docker push ${IMAGE_GCP_NAME}
+
 docker-run:
-	docker run youtube-data-project:latest
+	docker run ${IMAGE_NAME}:${IMAGE_VERSION}
+

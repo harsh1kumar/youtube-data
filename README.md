@@ -1,4 +1,4 @@
-# youtube-data
+# YouTube Data Project
 End-to-end data science pipeline which uses Youtube data
 
 ## Tools used as part of this project:
@@ -11,6 +11,7 @@ End-to-end data science pipeline which uses Youtube data
     - Google Cloud Storage
     - Service accounts
     - Artifact Repository (Container Registry)
+    - Monitoring
 6. Hugging Face Transformers
 7. Makefiles
 8. Python Virtual Environments
@@ -54,13 +55,20 @@ python -m ipykernel install --user --name=yt-venv-jupyter
 
 Apart from the above, you will need to install `docker` to build and push docker images.
 
-## Build and Run
+## Docker Build and Run
+
+We have the following make commands to build, push and run docker containers
+
+```
+make docker-build
+make docker-push
+make docker-run
+```
 
 ## Resources
 
 - [Looker Dashboard](https://lookerstudio.google.com/u/0/reporting/c51cf45f-b415-48a9-8f48-0f95be95a616/page/tEnnC)
 
 
-## Rough work
 
 
