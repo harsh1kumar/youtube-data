@@ -5,3 +5,4 @@ pandas-gbq==0.19.2
 isodate==0.6.1
 transformers==4.34.0
 click==8.1.7
+flake8==6.1.0

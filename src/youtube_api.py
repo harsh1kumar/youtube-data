@@ -1,18 +1,18 @@
 import pandas as pd
 
-##############################################
-## Functions to get data from YouTube Data API
-##############################################
+# #############################################
+# ## Functions to get data from YouTube Data API
+# #############################################
 
-## Function for Channel information
+
+# Function for Channel information
 def get_channel_info(youtube, channel_ids):
-    
     request = youtube.channels().list(
         part="snippet,contentDetails,statistics",
         id=",".join(channel_ids)
     )
     response = request.execute()
-    
+
     all_data = []
     for items in response["items"]:
         data = {
@@ -29,11 +29,11 @@ def get_channel_info(youtube, channel_ids):
     return pd.DataFrame(all_data)
 
 
-## Function for Playlist Information
+# Function for Playlist Information
 def get_playlist_info(youtube, playlist_ids):
-    
+
     all_data = []
-    
+
     for pid in playlist_ids:
         next_page_token = ""
 
@@ -42,7 +42,7 @@ def get_playlist_info(youtube, playlist_ids):
                 part="snippet,contentDetails",
                 maxResults=50,
                 playlistId=pid,
-                pageToken = next_page_token
+                pageToken=next_page_token
             )
             response = request.execute()
 
@@ -55,27 +55,26 @@ def get_playlist_info(youtube, playlist_ids):
                     "video_id": items["snippet"]["resourceId"]["videoId"]
                 }
                 all_data.append(data)
-            
+
             next_page_token = response.get('nextPageToken')
 
     return pd.DataFrame(all_data)
 
 
-## Function for Video Information
+# Function for Video Information
 def get_video_details(youtube, video_ids):
 
     all_data = []
     for i in range(0, len(video_ids), 10):
         # Make request for 10 videos at a time
-        vid = video_ids[i: i+10]
-    
+        vid = video_ids[i: i + 10]
+
         request = youtube.videos().list(
             part="contentDetails,snippet,statistics",
             id=",".join(vid)
         )
         response = request.execute()
-        
-        
+
         for items in response["items"]:
             data = {
                 "video_id": items["id"],
@@ -86,14 +85,15 @@ def get_video_details(youtube, video_ids):
                 "like_count": items["statistics"]["likeCount"],
                 "comment_count": items["statistics"]["commentCount"],
             }
-    
+
             all_data.append(data)
 
     return pd.DataFrame(all_data)
 
-## Function for Comment Information
+
+# Function for Comment Information
 def get_video_comments(youtube, video_ids):
-    
+
     all_data = []
     for vid in video_ids:
         request = youtube.commentThreads().list(
@@ -105,7 +105,6 @@ def get_video_comments(youtube, video_ids):
 
         for items in response["items"]:
             data = {
-
                 "comment_id": items["id"],
                 "video_id": items["snippet"]["videoId"],
                 "channel_id": items["snippet"]["channelId"],
@@ -118,4 +117,3 @@ def get_video_comments(youtube, video_ids):
             all_data.append(data)
 
     return pd.DataFrame(all_data)
-

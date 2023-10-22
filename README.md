@@ -17,6 +17,7 @@ End-to-end data science pipeline which uses Youtube data
 8. Python Virtual Environments
 9. Jupyter Notebooks
 10. Google Looker Studios
+11. Linting (flake8)
 
 
 ## Setup
