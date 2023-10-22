@@ -66,6 +66,22 @@ make docker-push
 make docker-run
 ```
 
+## Linting and Githooks
+
+To setup linting with githooks, add the file `.git/hooks/pre-commit` with folllowing contents:
+
+```
+#!/usr/bin/env bash
+
+# Get the list of changed files.
+changed_files=$(git diff --name-only HEAD | grep -E '\.py$')
+
+# If there are any changed Python files, run Flake8.
+if [[ $changed_files ]]; then
+  flake8 --ignore=E501 $changed_files
+fi
+```
+
 ## Resources
 
 - [Looker Dashboard](https://lookerstudio.google.com/u/0/reporting/c51cf45f-b415-48a9-8f48-0f95be95a616/page/tEnnC)
