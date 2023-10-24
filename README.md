@@ -41,6 +41,7 @@ export YOUTUBE_API_KEY=<your-api-key>
 4.) If you want to use service account, you need to put the value of secret key in an environment variable. Below, we are reading the key from `../service-account.json`.
 ```
 export SERVICE_ACCOUNT_SECRET_KEY=$(cat ../service-account.json)
+export GOOGLE_APPLICATION_CREDENTIALS=../service-account.json
 ```
 
 NOTE: You would need to install PyTorch, which I did using the following command since I am running on CPU.

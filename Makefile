@@ -29,6 +29,9 @@ env-notebook: env
 lint:
 	flake8 --ignore=E501 src/*
 
+run-local:
+	python src/data_pipeline.py --config_file=config/config.toml
+
 ## Docker
 docker-build:
 	docker build . \

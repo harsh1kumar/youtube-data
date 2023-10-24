@@ -1,9 +1,12 @@
+[gcp]
 gcp_project_id = "wide-hexagon-397214"
 bq_dataset = "youtube_data"
 
+[youtube]
 api_service_name = "youtube"
 api_version = "v3"
 
+[channels]
 # @harsh1kumar -> UCueeXkuJezkCqu0YryvJnnQ
 # @amitvarma -> UCs8a-hjf6X4pa-O0orSoC8w
 # @Thuvu5 -> UCJQJAI7IjbLcpsjWdSzYz0Q

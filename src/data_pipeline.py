@@ -1,6 +1,7 @@
 import os
 
 import click
+import toml
 import pandas as pd
 from html import unescape
 from datetime import datetime
@@ -16,26 +17,27 @@ from youtube_api import (
     get_video_details,
     get_video_comments
 )
-from config import (
-    gcp_project_id,
-    bq_dataset,
-    api_service_name,
-    api_version,
-    channel_ids,
-)
 
 
 @click.command()
-# @click.option('--channel_ids', default=["UCueeXkuJezkCqu0YryvJnnQ"], help='List of channel ids')
-def main():
+@click.option('--config_file', default="config/config.toml", help='Path to config file')
+def main(config_file):
 
     print("#############################################")
     print("main: STARTED")
     print("##############################################\n\n")
 
+    # Load a config file
+    with open(config_file, 'r') as f:
+        config = toml.load(f)
+    
+    print("Configs:", config)
+
     api_key = os.environ["YOUTUBE_API_KEY"]
     youtube = googleapiclient.discovery.build(
-        api_service_name, api_version, developerKey=api_key
+        serviceName=config["youtube"]["api_service_name"],
+        version=config["youtube"]["api_version"],
+        developerKey=api_key
     )
 
     # #############################################
@@ -43,7 +45,7 @@ def main():
     # #############################################
 
     # Channel Information
-    channel_info = get_channel_info(youtube, channel_ids)
+    channel_info = get_channel_info(youtube, config["channels"]["channel_ids"])
     print("channel_info.shape", channel_info.shape)
 
     # Playlist Information
@@ -150,32 +152,32 @@ def main():
 
     # Push channel details
     channel_info["load_timestamp"] = datetime.now()
-    channel_info.to_gbq(destination_table='{}.channel_info'.format(bq_dataset),
-                        project_id=gcp_project_id,
+    channel_info.to_gbq(destination_table='{}.channel_info'.format(config["gcp"]["bq_dataset"]),
+                        project_id=config["gcp"]["gcp_project_id"],
                         if_exists='append',
                         credentials=credentials)
     print("Push channel_info: COMPLETED")
 
     # Push all video details
     video_details["load_timestamp"] = datetime.now()
-    video_details.to_gbq(destination_table='{}.video_details'.format(bq_dataset),
-                         project_id=gcp_project_id,
+    video_details.to_gbq(destination_table='{}.video_details'.format(config["gcp"]["bq_dataset"]),
+                         project_id=config["gcp"]["gcp_project_id"],
                          if_exists='replace',
                          credentials=credentials)
     print("Push video_details: COMPLETED")
 
     # Push latest video details
     latest_video_details["load_timestamp"] = datetime.now()
-    latest_video_details.to_gbq(destination_table='{}.latest_video_details'.format(bq_dataset),
-                                project_id=gcp_project_id,
+    latest_video_details.to_gbq(destination_table='{}.latest_video_details'.format(config["gcp"]["bq_dataset"]),
+                                project_id=config["gcp"]["gcp_project_id"],
                                 if_exists='replace',
                                 credentials=credentials)
     print("Push latest_video_details: COMPLETED")
 
     # Push comment details
     comment_details["load_timestamp"] = datetime.now()
-    comment_details.to_gbq(destination_table='{}.comment_details'.format(bq_dataset),
-                           project_id=gcp_project_id,
+    comment_details.to_gbq(destination_table='{}.comment_details'.format(config["gcp"]["bq_dataset"]),
+                           project_id=config["gcp"]["gcp_project_id"],
                            if_exists='replace',
                            credentials=credentials)
     print("Push comment_details: COMPLETED")
