@@ -26,6 +26,8 @@ env:
 env-notebook: env
 	python -m ipykernel install --user --name=yt-venv-jupyter
 
+lint:
+	flake8 --ignore=E501 src/*
 
 ## Docker
 docker-build:

@@ -18,6 +18,7 @@ End-to-end data science pipeline which uses Youtube data
 9. Jupyter Notebooks
 10. Google Looker Studios
 11. Linting (flake8)
+12. Git Commit Hooks
 
 
 ## Setup
@@ -80,6 +81,12 @@ changed_files=$(git diff --name-only HEAD | grep -E '\.py$')
 if [[ $changed_files ]]; then
   flake8 --ignore=E501 $changed_files
 fi
+```
+
+To run linting, run the following:
+
+```
+make lint
 ```
 
 ## Resources
