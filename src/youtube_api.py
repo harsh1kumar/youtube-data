@@ -7,6 +7,16 @@ import pandas as pd
 
 # Function for Channel information
 def get_channel_info(youtube, channel_ids):
+    """
+    Get details about the given channels using YouTube API
+
+    Args:
+        youtube: YouTube API's resource object with methods for interacting with the API
+        channel_ids (list): List of channel IDs
+
+    Returns:
+        pd.DataFrame: Details about the list of channels
+    """
     request = youtube.channels().list(
         part="snippet,contentDetails,statistics",
         id=",".join(channel_ids)
@@ -31,6 +41,16 @@ def get_channel_info(youtube, channel_ids):
 
 # Function for Playlist Information
 def get_playlist_info(youtube, playlist_ids):
+    """
+    Get details about the given playlists using YouTube API
+
+    Args:
+        youtube: YouTube API's resource object with methods for interacting with the API
+        playlist_ids (list): List of playlist IDs
+
+    Returns:
+        pd.DataFrame: Details about the playlists including video IDs
+    """
 
     all_data = []
 
@@ -63,6 +83,18 @@ def get_playlist_info(youtube, playlist_ids):
 
 # Function for Video Information
 def get_video_details(youtube, video_ids):
+    """
+    Get details about the given videos using YouTube API
+    The function does batch requests of size <= 10
+    If the number of video ids is more than 10, then multiple APIs calls are made iteratively
+
+    Args:
+        youtube: YouTube API's resource object with methods for interacting with the API
+        video_ids (list): List of video IDs
+
+    Returns:
+        pd.DataFrame: Details about the playlists including video IDs
+    """
 
     all_data = []
     for i in range(0, len(video_ids), 10):
@@ -93,6 +125,17 @@ def get_video_details(youtube, video_ids):
 
 # Function for Comment Information
 def get_video_comments(youtube, video_ids):
+    """
+    Get comments on the given videos using YouTube API
+    Maximum 100 comments are returned per video
+
+    Args:
+        youtube: YouTube API's resource object with methods for interacting with the API
+        video_ids (list): List of video IDs
+
+    Returns:
+        pd.DataFrame: Details about the comments on the given videos
+    """
 
     all_data = []
     for vid in video_ids:
