@@ -1,4 +1,4 @@
-.PHONEY: env env-notebook docker-build docker-push docker-run
+.PHONEY: env env-notebook lint set-env-vars run-local docker-build docker-push docker-run
 
 SHELL:=bash
 
@@ -10,6 +10,11 @@ IMAGE_NAME=youtube-data-project
 IMAGE_VERSION=latest
 
 IMAGE_GCP_NAME=${GCP_REGION}-docker.pkg.dev/${GCP_PROJECT}/${GCP_ARTIFACT_REPO}/${IMAGE_NAME}:${IMAGE_VERSION}
+
+## Environment Variables
+export YOUTUBE_API_KEY=$(shell cat ../api_key_youtube.txt)
+export GOOGLE_APPLICATION_CREDENTIALS=../service-account.json
+export SERVICE_ACCOUNT_SECRET_KEY=$(shell cat ../service-account.json)
 
 ## Environment
 env:

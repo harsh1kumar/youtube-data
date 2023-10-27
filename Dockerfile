@@ -12,12 +12,13 @@ RUN printf "%s" "${SERVICE_ACCOUNT_SECRET_KEY}" > /etc/service-account.json
 
 # Copy relevant files into docker image
 COPY src /youtube_data_project/src/
+COPY config /youtube_data_project/config/
 COPY requirements.txt /youtube_data_project/
 WORKDIR /youtube_data_project
 
 ## Install packages required for building python dependencies
 RUN apt-get update
-RUN apt-get install -y make automake cmake gcc g++
+RUN apt-get install -y make cmake gcc g++
 
 # Setup python environment and install dependencies
 RUN python -m venv yt-env

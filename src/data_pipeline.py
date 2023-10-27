@@ -30,7 +30,7 @@ def main(config_file):
     # Load a config file
     with open(config_file, 'r') as f:
         config = toml.load(f)
-    
+
     print("Configs:", config)
 
     api_key = os.environ["YOUTUBE_API_KEY"]
@@ -83,22 +83,31 @@ def main(config_file):
     # Get proper duration
     latest_video_details['duration_sec'] = latest_video_details['duration'].apply(lambda x: isodate.parse_duration(x))
     latest_video_details['duration_sec'] = latest_video_details['duration_sec'].dt.total_seconds()
-
     latest_video_details.drop('duration', axis=1, inplace=True)
 
-    # Fix datatypes
-    channel_info.view_count = channel_info.view_count.astype(int)
-    channel_info.subscriber_count = channel_info.subscriber_count.astype(int)
-    channel_info.video_count = channel_info.video_count.astype(int)
+    video_details['duration_sec'] = video_details['duration'].apply(lambda x: isodate.parse_duration(x))
+    video_details['duration_sec'] = video_details['duration_sec'].dt.total_seconds()
+    video_details.drop('duration', axis=1, inplace=True)
 
-    video_details.view_count = video_details.view_count.astype(int)
-    video_details.like_count = video_details.like_count.astype(int)
-    video_details.comment_count = video_details.comment_count.astype(int)
+    # Fix datatypes
+    channel_info = channel_info.astype({
+        "view_count": float,
+        "subscriber_count": float,
+        "video_count": float,
+    })
+
+    video_details = video_details.astype({
+        "view_count": float,
+        "like_count": float,
+        "comment_count": float,
+    })
     video_details.published_at = pd.to_datetime(video_details.published_at, format='%Y-%m-%dT%H:%M:%SZ')
 
-    latest_video_details.view_count = latest_video_details.view_count.astype(int)
-    latest_video_details.like_count = latest_video_details.like_count.astype(int)
-    latest_video_details.comment_count = latest_video_details.comment_count.astype(int)
+    latest_video_details = latest_video_details.astype({
+        "view_count": float,
+        "like_count": float,
+        "comment_count": float,
+    })
     latest_video_details.published_at = pd.to_datetime(latest_video_details.published_at, format='%Y-%m-%dT%H:%M:%SZ')
 
     comment_details.like_count = comment_details.like_count.astype(int)
