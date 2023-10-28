@@ -7,3 +7,6 @@ transformers==4.34.0
 click==8.1.7
 flake8==6.1.0
 toml==0.10.2
+wheel==0.41.2
+
+
