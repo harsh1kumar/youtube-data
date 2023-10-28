@@ -160,7 +160,7 @@ def main(config_file):
     # Before pushing, it is useful to add load_timestamp to the table
 
     # Push channel details
-    channel_info["load_timestamp"] = datetime.now()
+    channel_info["load_timestamp"] = datetime.utcnow()
     channel_info.to_gbq(destination_table='{}.channel_info'.format(config["gcp"]["bq_dataset"]),
                         project_id=config["gcp"]["gcp_project_id"],
                         if_exists='append',
@@ -168,7 +168,7 @@ def main(config_file):
     print("Push channel_info: COMPLETED")
 
     # Push all video details
-    video_details["load_timestamp"] = datetime.now()
+    video_details["load_timestamp"] = datetime.utcnow()
     video_details.to_gbq(destination_table='{}.video_details'.format(config["gcp"]["bq_dataset"]),
                          project_id=config["gcp"]["gcp_project_id"],
                          if_exists='replace',
@@ -176,7 +176,7 @@ def main(config_file):
     print("Push video_details: COMPLETED")
 
     # Push latest video details
-    latest_video_details["load_timestamp"] = datetime.now()
+    latest_video_details["load_timestamp"] = datetime.utcnow()
     latest_video_details.to_gbq(destination_table='{}.latest_video_details'.format(config["gcp"]["bq_dataset"]),
                                 project_id=config["gcp"]["gcp_project_id"],
                                 if_exists='replace',
@@ -184,7 +184,7 @@ def main(config_file):
     print("Push latest_video_details: COMPLETED")
 
     # Push comment details
-    comment_details["load_timestamp"] = datetime.now()
+    comment_details["load_timestamp"] = datetime.utcnow()
     comment_details.to_gbq(destination_table='{}.comment_details'.format(config["gcp"]["bq_dataset"]),
                            project_id=config["gcp"]["gcp_project_id"],
                            if_exists='replace',
