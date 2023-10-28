@@ -19,6 +19,9 @@ End-to-end data science pipeline which uses Youtube data
 10. Google Looker Studios
 11. Linting (flake8)
 12. Git Commit Hooks
+13. Regession
+    - Scikit Learn
+    - Statsmodels OLS
 
 
 ## Setup
