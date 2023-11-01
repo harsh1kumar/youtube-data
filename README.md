@@ -23,6 +23,12 @@ End-to-end data science pipeline which uses Youtube data
     - Scikit Learn
     - Statsmodels OLS
 
+## Diagrams
+
+![Python Code](docs/python_code.jpg)  
+
+![Data Pipeline](docs/data_pipeline.jpg)
+
 
 ## Setup
 
