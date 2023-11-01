@@ -1,3 +1,5 @@
-[] Complete the looker studios dashboard
-[] Prediction API which gives results of regression
-[] If ETL pipeline is re-run on the same day, then don't insert. Instead just update.
+- Complete the looker studios dashboard 
+- Simple XGBoost Model
+- Github actions to create docker image and push to aritifact repository
+- Prediction API which gives results of regression  
+- If ETL pipeline is re-run on the same day, then don't insert. Instead just update.

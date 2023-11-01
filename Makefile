@@ -29,6 +29,7 @@ env:
 	pip install torch --index-url https://download.pytorch.org/whl/cpu
 
 env-notebook: env
+	pip install -r requirements_notebook.txt
 	python -m ipykernel install --user --name=yt-venv-jupyter
 
 lint:

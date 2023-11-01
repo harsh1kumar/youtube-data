@@ -1,4 +1,4 @@
-# YouTube Data Project
+# YouTube Data Pipeline Project
 End-to-end data science pipeline which uses Youtube data
 
 ## Tools used as part of this project:
